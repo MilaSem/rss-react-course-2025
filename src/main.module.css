@@ -1,0 +1,8 @@
+@import url('./colors.module.css');
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text);
+}

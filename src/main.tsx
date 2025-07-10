@@ -4,7 +4,10 @@ import { App } from './App.tsx';
 
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary.tsx';
 
+import styles from './main.module.css';
+
 const container = document.createElement('div');
+container.className = `${styles.container}`;
 document.body.appendChild(container);
 
 const root = createRoot(container);
