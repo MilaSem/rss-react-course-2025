@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg1"
+   width="64"
+   height="64"
+   viewBox="0 0 64 64"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="linearGradient185">
+      <stop
+         style="stop-color:#087ea4;stop-opacity:1;"
+         offset="0"
+         id="stop185" />
+      <stop
+         style="stop-color:#08a49d;stop-opacity:1;"
+         offset="1"
+         id="stop186" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient185"
+       id="linearGradient186"
+       x1="0"
+       y1="32"
+       x2="64"
+       y2="32"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <circle
+     style="font-variation-settings:'wght' 700;fill:url(#linearGradient186);fill-opacity:1;stroke:none;stroke-width:0.755906;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="path177"
+     cx="32"
+     cy="32"
+     r="32" />
+  <path
+     id="ellipse185"
+     style="font-variation-settings:'wght' 700;fill:none;stroke:#ffffff;stroke-width:3.78"
+     d="M 45.455107,8.7157815 A 12.607839,26.892296 30.03446 0 1 42.921137,38.29974 12.607839,26.892296 30.03446 0 1 18.544895,55.284251 12.607839,26.892296 30.03446 0 1 21.078864,25.700294 12.607839,26.892296 30.03446 0 1 45.455107,8.7157815 Z m 0,46.5684565 A 26.892296,12.607839 59.965539 0 1 21.078863,38.299725 26.892296,12.607839 59.965539 0 1 18.544894,8.7157677 26.892296,12.607839 59.965539 0 1 42.921137,25.700279 26.892296,12.607839 59.965539 0 1 45.455107,55.284238 Z M 58.910211,32.000001 A 26.910212,12.599446 2.7778104e-7 0 1 32,44.599446 26.910212,12.599446 2.7778104e-7 0 1 5.0897879,32.000001 26.910212,12.599446 2.7778104e-7 0 1 32,19.400555 26.910212,12.599446 2.7778104e-7 0 1 58.910211,32.000001 Z" />
+  <path
+     style="font-variation-settings:'wght' 700;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:3.78;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 32.005667,36.40199 c -7.252297,-2.883708 -7.6211,-12.165342 -1e-6,-5.948642 7.716086,-6.077772 7.2523,3.064934 1e-6,5.948642 z"
+     id="path185" />
+</svg>
