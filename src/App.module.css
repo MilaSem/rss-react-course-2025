@@ -1,0 +1,44 @@
+body {
+  overflow-y: scroll;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Nunito, sans-serif;
+}
+
+.title {
+  margin: 2rem auto;
+
+  font-family: Coiny, system-ui;
+  font-size: 2.5rem;
+  font-weight: normal;
+  color: var(--accent);
+}
+
+.error {
+  min-width: 7rem;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: none;
+  border-radius: 2rem;
+
+  font-size: 1rem;
+  color: var(--text-input);
+
+  background-color: var(--accent);
+
+  transition: all 0.5s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .error {
+    &:hover {
+      cursor: pointer;
+      color: var(--accent);
+      background-color: var(--hover);
+    }
+  }
+}
