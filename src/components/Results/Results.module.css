@@ -1,0 +1,14 @@
+.container {
+  width: 75%;
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+
+  font-family: Coiny, system-ui;
+  font-size: 1.5rem;
+  font-weight: normal;
+  text-align: center;
+}
