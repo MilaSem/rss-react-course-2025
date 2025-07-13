@@ -1,0 +1,61 @@
+.control {
+  display: flex;
+  justify-content: space-between;
+
+  width: 35rem;
+  margin-bottom: 2rem;
+  padding: 0.5rem;
+  border-radius: 4rem;
+
+  background-color: var(--accent);
+}
+
+.input {
+  margin-left: 1rem;
+  border: none;
+
+  font-size: 1rem;
+  color: var(--text-input);
+
+  background-color: transparent;
+  outline: none;
+}
+
+.input:focus-visible {
+  border: none;
+}
+
+.input::placeholder {
+  color: var(--text-input);
+}
+
+.button {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 0.25rem;
+  border: none;
+
+  background-color: transparent;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+}
+
+.path {
+  fill: var(--companion);
+  transition: fill 0.5s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button {
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover .path {
+      fill: var(--hover);
+    }
+  }
+}
