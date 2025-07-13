@@ -13,7 +13,7 @@ interface AppState {
   items: Media[];
   loading: boolean;
   error: string | null;
-  triggerError: boolean;
+  isErrorTriggered: boolean;
 }
 
 export class App extends Component<Record<string, never>, AppState> {
@@ -23,7 +23,7 @@ export class App extends Component<Record<string, never>, AppState> {
       items: [],
       loading: false,
       error: null,
-      triggerError: false,
+      isErrorTriggered: false,
     };
   }
 
@@ -31,12 +31,10 @@ export class App extends Component<Record<string, never>, AppState> {
     this.setState({ loading: true, error: null });
 
     try {
-      let response;
-      if (searchTerm) {
-        response = await fetchAnimeBySearchTerm(searchTerm);
-      } else {
-        response = await fetchPopularAnime();
-      }
+      const response = searchTerm
+        ? await fetchAnimeBySearchTerm(searchTerm)
+        : await fetchPopularAnime();
+
       this.setState({ items: response.data.Page.media, loading: false });
     } catch (error: unknown) {
       let message = '';
@@ -57,7 +55,7 @@ export class App extends Component<Record<string, never>, AppState> {
   };
 
   render() {
-    if (this.state.triggerError) {
+    if (this.state.isErrorTriggered) {
       throw new Error('Test error from render');
     }
 
@@ -73,7 +71,7 @@ export class App extends Component<Record<string, never>, AppState> {
 
         <button
           className={styles.error}
-          onClick={() => this.setState({ triggerError: true })}
+          onClick={() => this.setState({ isErrorTriggered: true })}
         >
           Error
         </button>

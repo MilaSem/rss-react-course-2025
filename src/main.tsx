@@ -7,8 +7,8 @@ import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary.tsx';
 import styles from './main.module.css';
 
 const container = document.createElement('div');
-container.className = `${styles.container}`;
-document.body.appendChild(container);
+container.className = styles.container;
+document.body.append(container);
 
 const root = createRoot(container);
 

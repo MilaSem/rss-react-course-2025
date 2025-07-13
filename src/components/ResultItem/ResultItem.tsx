@@ -20,7 +20,7 @@ export class ResultItem extends Component<ResultItemProps> {
           {item.title.english || item.title.romaji}
         </p>
         <p className={styles.description}>
-          {cleanAndTrimText(item.description, MAX_LENGTH) ||
+          {cleanAndTrimText(MAX_LENGTH, item.description) ||
             'No description for this item'}
         </p>
         {item.coverImage?.extraLarge && (

@@ -1,8 +1,5 @@
-export const cleanAndTrimText = (
-  html: string | undefined,
-  maxLength: number,
-): string => {
-  const text = (html ?? '').replace(/<[^>]+>/g, '');
+export const cleanAndTrimText = (maxLength: number, html = ''): string => {
+  const text = (html ?? '').replace(/<[^>]+>/g, '').trim();
 
   if (text.length <= maxLength) {
     return text;

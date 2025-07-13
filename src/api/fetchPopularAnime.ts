@@ -1,11 +1,10 @@
-import { ApiResponse, fetchAnimeData } from './fetchAnimeData';
-
-const DEFAULT_PAGE = 1;
-const DEFAULT_PER_PAGE = 20;
+import { fetchAnimeData } from './fetchAnimeData';
+import { DEFAULT_PAGE, DEFAULT_PER_PAGE } from './constants';
+import type { ApiResponse } from './fetchAnimeData';
 
 export const fetchPopularAnime = async (
-  page: number = DEFAULT_PAGE,
-  perPage: number = DEFAULT_PER_PAGE,
+  page = DEFAULT_PAGE,
+  perPage = DEFAULT_PER_PAGE,
 ): Promise<ApiResponse> => {
   const query = `
     query ($page: Int, $perPage: Int) {

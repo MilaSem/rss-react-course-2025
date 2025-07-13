@@ -1,4 +1,4 @@
-import { Media, PageInfo } from '@/types/anilistTypes';
+import type { Media, PageInfo } from '@/types/anilistTypes';
 
 const API_URL = 'https://graphql.anilist.co';
 

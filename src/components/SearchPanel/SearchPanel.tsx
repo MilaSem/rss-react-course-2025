@@ -1,4 +1,5 @@
 import { Component, createRef } from 'react';
+import type { FormEvent } from 'react';
 import styles from './SearchPanel.module.css';
 
 interface SearchPanelProps {
@@ -35,7 +36,7 @@ export class SearchPanel extends Component<SearchPanelProps, SearchPanelState> {
 
   handleChange = (value: string) => this.setState({ searchTerm: value });
 
-  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const trimmedSearchTerm = this.state.searchTerm.trim();
     localStorage.setItem('searchTerm', trimmedSearchTerm);

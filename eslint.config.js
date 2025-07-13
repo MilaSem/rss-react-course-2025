@@ -47,6 +47,9 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       'react/prop-types': 'off',
+      '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-inferrable-types': 'error',
     },
   },
   {
