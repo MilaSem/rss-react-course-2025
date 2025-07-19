@@ -10,7 +10,7 @@
     "format:fix": "prettier --write --ignore-unknown .",
     "stylelint": "stylelint '**/*.css' --fix",
     "test": "vitest",
-    "coverage": "vitest run --coverage.enabled --coverage",
+    "test:coverage": "vitest run --coverage.enabled --coverage",
     "preview": "vite preview",
     "prepare": "husky"
   },
