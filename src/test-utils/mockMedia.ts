@@ -1,36 +1,44 @@
 import type { Media } from '@/types/anilistTypes';
 
-export const mockMediaItem1: Media = {
+export const mockMediaItemWithEnglish: Media = {
   id: 1,
-  title: { english: 'English Title 1', romaji: 'Romaji Title 1' },
-  description: 'Description 1',
+  title: { english: 'English Title', romaji: 'Romaji Title' },
+  description: 'Some description here',
   coverImage: { extraLarge: 'https://example.com/image1.jpg' },
   status: 'RELEASING',
 };
 
-export const mockMediaItem2: Media = {
+export const mockMediaItemWithRomajiOnly: Media = {
   id: 2,
-  title: { english: 'English Title 2', romaji: 'Romaji Title 2' },
-  description: '',
+  title: { english: '', romaji: 'Romaji Title' },
+  description: 'Description for romaji only',
   coverImage: { extraLarge: 'https://example.com/image2.jpg' },
   status: 'FINISHED',
 };
 
-export const mockMediaItem3: Media = {
+export const mockMediaItemNoTitle: Media = {
   id: 3,
-  title: { english: '', romaji: 'Romaji Title 3' },
-  description: 'Description 3',
+  title: { english: '', romaji: '' },
+  description: 'Description without title',
   coverImage: { extraLarge: 'https://example.com/image3.jpg' },
   status: 'CANCELLED',
 };
 
+export const mockMediaItemNoDescription: Media = {
+  id: 4,
+  title: { english: 'English Title', romaji: 'Romaji Title' },
+  description: '',
+  coverImage: { extraLarge: 'https://example.com/image4.jpg' },
+  status: 'RELEASING',
+};
+
 export const mockMediaItems: Media[] = [
-  mockMediaItem1,
-  mockMediaItem2,
-  mockMediaItem3,
+  mockMediaItemWithEnglish,
+  mockMediaItemWithRomajiOnly,
+  mockMediaItemNoDescription,
 ];
 
 export const mockMediaItemsBySearchTerm: Media[] = [
-  mockMediaItem1,
-  mockMediaItem2,
+  mockMediaItemWithEnglish,
+  mockMediaItemNoDescription,
 ];
