@@ -36,4 +36,10 @@ describe('Results', () => {
     render(<Results loading={false} error={null} items={mockItems} />);
     expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
   });
+
+  it('should display error message when error prop is set', () => {
+    const errorMsg = 'Network error';
+    render(<Results loading={false} error={errorMsg} items={[]} />);
+    expect(screen.getByText(`Error: ${errorMsg}`)).toBeInTheDocument();
+  });
 });
