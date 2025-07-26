@@ -1,5 +1,16 @@
 @import url('./colors.module.css');
 
+body {
+  overflow-y: scroll;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Nunito, sans-serif;
+}
+
 .container {
   display: flex;
   flex-direction: column;
