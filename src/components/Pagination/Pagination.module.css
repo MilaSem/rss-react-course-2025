@@ -1,0 +1,55 @@
+.pagination {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 1rem;
+
+  background-color: var(--companion);
+
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+.svg {
+  width: 1.2rem;
+  height: auto;
+}
+
+.path {
+  fill: var(--accent);
+  transition: fill 0.5s ease;
+}
+
+.arrow:disabled {
+  background-color: var(--bg-disabled);
+
+  .path {
+    fill: var(--path-disabled);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .arrow:not(:disabled):hover {
+    cursor: pointer;
+    background-color: var(--hover);
+  }
+
+  .arrow:not(:disabled):hover .path {
+    fill: var(--companion);
+  }
+}
