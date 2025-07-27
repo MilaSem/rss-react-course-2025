@@ -1,7 +1,10 @@
+import { useCallback } from 'react';
+import { cleanAndTrimText } from '@/utils/cleanAndTrimText';
+import { fetchAnimeById } from '@/api/fetchAnimeById';
 import type { Media } from '@/types/anilistTypes';
 
 import styles from './ResultItem.module.css';
-import { cleanAndTrimText } from '@/utils/cleanAndTrimText';
+import { useSearchParams } from 'react-router';
 
 const MAX_LENGTH = 300;
 
@@ -10,8 +13,17 @@ interface ResultItemProps {
 }
 
 export const ResultItem = ({ item }: ResultItemProps) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const handleClick = useCallback(() => {
+    searchParams.set('details', `${item.id}`);
+    setSearchParams(searchParams);
+    fetchAnimeById(item.id).catch((error) => {
+      console.error('Error fetching anime details:', error);
+    });
+  }, [item.id]);
+
   return (
-    <div className={styles.item}>
+    <button className={styles.item} onClick={handleClick}>
       <p className={styles.title}>
         {item.title.english || item.title.romaji || 'Title not available'}
       </p>
@@ -26,6 +38,6 @@ export const ResultItem = ({ item }: ResultItemProps) => {
           className={styles.poster}
         />
       )}
-    </div>
+    </button>
   );
 };
