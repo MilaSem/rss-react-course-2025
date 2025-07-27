@@ -16,7 +16,7 @@ vi.mock('./fetchAnimeData', () => {
 import { fetchAnimeData } from './fetchAnimeData';
 
 const DEFAULT_PAGE = 1;
-const DEFAULT_PER_PAGE = 20;
+const DEFAULT_PER_PAGE = 5;
 
 const validStatuses: MediaStatus[] = [
   'FINISHED',

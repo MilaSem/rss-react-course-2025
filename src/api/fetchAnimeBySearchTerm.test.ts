@@ -15,7 +15,7 @@ vi.mock('./fetchAnimeData', () => {
 import { fetchAnimeData } from './fetchAnimeData';
 
 const DEFAULT_PAGE = 1;
-const DEFAULT_PER_PAGE = 20;
+const DEFAULT_PER_PAGE = 5;
 
 describe('fetchAnimeBySearchTerm', () => {
   it('should call fetchAnimeData with the correct params', async () => {
