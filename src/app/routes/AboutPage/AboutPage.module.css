@@ -6,16 +6,18 @@
 }
 
 .title {
-  font-family: Coiny, system-ui;
   margin-bottom: 2rem;
+  font-family: Coiny, system-ui;
 }
 
 .link {
   padding: 1rem;
-  color: var(--accent);
+
   font-family: Coiny, system-ui;
   font-weight: 800;
+  color: var(--accent);
   text-decoration: none;
+
   transition: color 0.5s ease;
 }
 

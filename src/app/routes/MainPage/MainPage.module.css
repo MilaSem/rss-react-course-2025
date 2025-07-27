@@ -16,7 +16,6 @@
   width: 25rem;
   margin-right: 2rem;
   padding: 2rem;
-
   border: 1px var(--accent) solid;
   border-radius: 3rem;
 }
@@ -49,13 +48,16 @@
 }
 
 .link {
+  align-self: end;
+
   margin-top: 1rem;
   margin-right: 2rem;
-  align-self: end;
-  color: var(--accent);
+
   font-family: Coiny, system-ui;
   font-weight: 800;
+  color: var(--accent);
   text-decoration: none;
+
   transition: color 0.5s ease;
 }
 
