@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
-import { fetchAnimeById } from '@/api/fetchAnimeById';
 import { cleanAndTrimText } from '@/utils/cleanAndTrimText';
+import { useAnimeDetails } from '@/hooks/useAnimeDetails';
 import { Spinner } from '../Spinner/Spinner';
-import type { Media } from '@/types/anilistTypes';
 
 import styles from './AnimeDetails.module.css';
 
@@ -12,29 +10,7 @@ export const AnimeDetails = () => {
   const idParam = searchParams.get('details');
   const id = idParam ? parseInt(idParam, 10) : null;
 
-  const [animeData, setAnimeData] = useState<Media | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    if (id) {
-      setLoading(true);
-      fetchAnimeById(id)
-        .then((data) => {
-          setAnimeData(data);
-          setLoading(false);
-        })
-        .catch((error: unknown) => {
-          let message = '';
-          if (error instanceof Error) {
-            message = error.message;
-            setError(message);
-          }
-          setLoading(false);
-        });
-    }
-  }, [id]);
-
+  const { animeData, loading, error } = useAnimeDetails(id);
   if (!id) return null;
 
   if (loading) return <Spinner />;
@@ -50,7 +26,7 @@ export const AnimeDetails = () => {
             {animeData.title?.english || animeData.title?.romaji || 'No title'}
           </p>
 
-          <p>
+          <p data-testid="description">
             {cleanAndTrimText(MAX_LENGTH, animeData.description) ||
               'No description for this item'}
           </p>
