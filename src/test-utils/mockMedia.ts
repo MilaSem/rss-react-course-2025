@@ -1,4 +1,5 @@
 import type { Media } from '@/types/anilistTypes';
+import type { ApiResponse } from '@/api/fetchAnimeData';
 
 export const mockMediaItemWithEnglish: Media = {
   id: 1,
@@ -42,3 +43,43 @@ export const mockMediaItemsBySearchTerm: Media[] = [
   mockMediaItemWithEnglish,
   mockMediaItemNoDescription,
 ];
+
+export const mockApiResponse: ApiResponse = {
+  data: {
+    Page: {
+      pageInfo: { hasNextPage: true, currentPage: 1 },
+      media: mockMediaItems,
+    },
+  },
+};
+
+export const mockApiResponseWithoutPageInfo: ApiResponse = {
+  data: {
+    Page: {
+      pageInfo: { currentPage: 1 },
+      media: mockMediaItems,
+    },
+  },
+};
+
+export const mockAnimeFullData: Media = {
+  id: 123,
+  title: {
+    romaji: 'Sample Romaji',
+    english: 'Sample English',
+    native: 'サンプル',
+  },
+  description: 'Sample description',
+  genres: ['Action', 'Adventure'],
+  episodes: 24,
+  seasonYear: 2023,
+  status: 'RELEASING',
+  averageScore: 85,
+  coverImage: {
+    extraLarge: 'https://example.com/extraLarge.jpg',
+    large: 'https://example.com/large.jpg',
+    medium: 'https://example.com/medium.jpg',
+    color: '#FFFFFF',
+  },
+  siteUrl: 'https://example.com/anime/123',
+};
