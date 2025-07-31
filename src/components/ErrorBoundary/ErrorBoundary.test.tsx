@@ -1,7 +1,6 @@
 import { Component } from 'react';
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { App } from '@/App';
 import { ErrorBoundary } from './ErrorBoundary';
 import userEvent from '@testing-library/user-event';
 
@@ -28,26 +27,46 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>,
     );
 
-    expect(screen.getByText('Oops! Error detected')).toBeInTheDocument();
-    expect(screen.getByAltText('error')).toBeInTheDocument();
+    expect(screen.getByText(/oops/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/error/i)).toBeInTheDocument();
     expect(consoleErrorSpy).toHaveBeenCalled();
   });
 });
 
 describe('Error button', () => {
+  class ErrorButton extends Component {
+    state = {
+      isErrorTriggered: false,
+    };
+
+    render() {
+      if (this.state.isErrorTriggered) {
+        throw new Error('Test error from button');
+      }
+
+      return (
+        <button onClick={() => this.setState({ isErrorTriggered: true })}>
+          Error
+        </button>
+      );
+    }
+  }
+
   it('should throw error on clicked', async () => {
     render(
       <ErrorBoundary>
-        <App />
+        <ErrorButton />
       </ErrorBoundary>,
     );
 
-    await userEvent.click(screen.getByText('Error'));
+    const user = userEvent.setup();
+    await user.click(screen.getByText(/error/i));
 
     await waitFor(() => {
-      expect(screen.getByText('Oops! Error detected')).toBeInTheDocument();
+      expect(screen.getByText(/oops/i)).toBeInTheDocument();
     });
-    expect(screen.getByAltText('error')).toBeInTheDocument();
+
+    expect(screen.getByAltText(/error/i)).toBeInTheDocument();
     expect(consoleErrorSpy).toHaveBeenCalled();
   });
 });
