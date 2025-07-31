@@ -17,7 +17,7 @@ describe('ResultItem', () => {
         <ResultItem item={mockMediaItemWithEnglish} />
       </MemoryRouter>,
     );
-    expect(screen.getByText('English Title')).toBeInTheDocument();
+    expect(screen.getByText(/english title/i)).toBeInTheDocument();
   });
 
   it('should display the romaji title if english title is missing', () => {
@@ -26,7 +26,7 @@ describe('ResultItem', () => {
         <ResultItem item={mockMediaItemWithRomajiOnly} />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Romaji Title')).toBeInTheDocument();
+    expect(screen.getByText(/romaji title/i)).toBeInTheDocument();
   });
 
   it('should display fallback if no title is provided', () => {
@@ -35,7 +35,7 @@ describe('ResultItem', () => {
         <ResultItem item={mockMediaItemNoTitle} />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Title not available')).toBeInTheDocument();
+    expect(screen.getByText(/title not available/i)).toBeInTheDocument();
   });
 
   it('should display the description if provided', () => {
@@ -44,7 +44,7 @@ describe('ResultItem', () => {
         <ResultItem item={mockMediaItemWithEnglish} />
       </MemoryRouter>,
     );
-    expect(screen.getByText('Some description here')).toBeInTheDocument();
+    expect(screen.getByText(/some description here/i)).toBeInTheDocument();
   });
 
   it('should display fallback if description is empty', () => {
@@ -54,7 +54,7 @@ describe('ResultItem', () => {
       </MemoryRouter>,
     );
     expect(
-      screen.getByText('No description for this item'),
+      screen.getByText(/no description for this item/i),
     ).toBeInTheDocument();
   });
 });

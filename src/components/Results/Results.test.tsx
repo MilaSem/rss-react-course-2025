@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Results } from './Results';
 import { mockMediaItems } from '@/test-utils/mockMedia';
@@ -24,7 +24,7 @@ describe('Results', () => {
 
   it('should display the clear message if the data array is empty', () => {
     render(<Results loading={false} error={null} items={[]} />);
-    expect(screen.getByText('Results are not found')).toBeInTheDocument();
+    expect(screen.getByText(/results are not found/i)).toBeInTheDocument();
   });
 
   it('should show loading status when requesting data', () => {

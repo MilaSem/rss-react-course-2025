@@ -11,7 +11,7 @@ export const mockMediaItemWithEnglish: Media = {
 
 export const mockMediaItemWithRomajiOnly: Media = {
   id: 2,
-  title: { english: '', romaji: 'Romaji Title' },
+  title: { english: undefined, romaji: 'Romaji Title' },
   description: 'Description for romaji only',
   coverImage: { extraLarge: 'https://example.com/image2.jpg' },
   status: 'FINISHED',
@@ -19,7 +19,7 @@ export const mockMediaItemWithRomajiOnly: Media = {
 
 export const mockMediaItemNoTitle: Media = {
   id: 3,
-  title: { english: '', romaji: '' },
+  title: { english: undefined, romaji: undefined },
   description: 'Description without title',
   coverImage: { extraLarge: 'https://example.com/image3.jpg' },
   status: 'CANCELLED',
@@ -28,7 +28,7 @@ export const mockMediaItemNoTitle: Media = {
 export const mockMediaItemNoDescription: Media = {
   id: 4,
   title: { english: 'English Title', romaji: 'Romaji Title' },
-  description: '',
+  description: undefined,
   coverImage: { extraLarge: 'https://example.com/image4.jpg' },
   status: 'RELEASING',
 };

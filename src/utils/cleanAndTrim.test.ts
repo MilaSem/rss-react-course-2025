@@ -6,7 +6,7 @@ describe('cleanAndTrim', () => {
     expect(cleanAndTrimText(10, undefined)).toBe('');
   });
 
-  it('should return the string unchanged if the string is less than maxLengt', () => {
+  it('should return the string unchanged if the string is less than maxLength', () => {
     expect(cleanAndTrimText(10, 'Hello')).toBe('Hello');
   });
 

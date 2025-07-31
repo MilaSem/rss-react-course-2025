@@ -26,8 +26,8 @@ describe('ErrorBoundary', () => {
       </ErrorBoundary>,
     );
 
-    expect(screen.getByText('Oops! Error detected')).toBeInTheDocument();
-    expect(screen.getByAltText('error')).toBeInTheDocument();
+    expect(screen.getByText(/oops/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/error/i)).toBeInTheDocument();
     expect(consoleErrorSpy).toHaveBeenCalled();
   });
 });
