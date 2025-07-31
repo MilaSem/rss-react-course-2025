@@ -17,7 +17,7 @@ export class ResultItem extends Component<ResultItemProps> {
     return (
       <div className={styles.item}>
         <p className={styles.title}>
-          {item.title.english || item.title.romaji}
+          {item.title.english || item.title.romaji || 'Title not available'}
         </p>
         <p className={styles.description}>
           {cleanAndTrimText(MAX_LENGTH, item.description) ||
