@@ -19,7 +19,7 @@ export const AboutPage = () => {
         The Anime Catalog App was created as part of the
         <a
           className={styles.link}
-          href="https://github.com/MilaSem"
+          href="https://rs.school/courses/reactjs"
           target="_blank"
           rel="noreferrer"
         >
