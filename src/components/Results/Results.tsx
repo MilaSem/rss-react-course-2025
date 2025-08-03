@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Media } from '@/types/anilistTypes';
 import { Spinner } from '../Spinner/Spinner';
 import { ResultItem } from '../ResultItem/ResultItem';
@@ -11,6 +12,19 @@ interface ResultsProps {
 }
 
 export const Results = ({ loading, error, items }: ResultsProps) => {
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+
+  const handleSelectedChange = (id: number, selected: boolean) => {
+    console.log(id, selected);
+    setSelectedIds((prev) => {
+      if (selected) {
+        return [...prev, id];
+      } else {
+        return prev.filter((itemId) => itemId !== id);
+      }
+    });
+  };
+
   if (loading) {
     return <Spinner />;
   }
@@ -26,7 +40,12 @@ export const Results = ({ loading, error, items }: ResultsProps) => {
   return (
     <div className={styles.container}>
       {items.map((item) => (
-        <ResultItem key={item.id} item={item} />
+        <ResultItem
+          key={item.id}
+          item={item}
+          isSelected={selectedIds.includes(item.id)}
+          onSelectedChange={handleSelectedChange}
+        />
       ))}
     </div>
   );
