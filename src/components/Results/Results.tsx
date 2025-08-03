@@ -1,6 +1,7 @@
 import type { Media } from '@/types/anilistTypes';
 import { Spinner } from '../Spinner/Spinner';
 import { ResultItem } from '../ResultItem/ResultItem';
+import { Flyout } from '../Flyout/Flyout';
 import { useSelectedItems } from '@/store/useSelectedItems';
 
 import styles from './Results.module.css';
@@ -45,6 +46,8 @@ export const Results = ({ loading, error, items }: ResultsProps) => {
           onSelectedChange={handleSelectedChange}
         />
       ))}
+
+      {selectedIds.length > 0 && <Flyout />}
     </div>
   );
 };
