@@ -5,6 +5,23 @@
   --companion: #88c9e7;
   --hover: #cfe8f3;
   --decoration: #087ea48a;
+  --bg: #fff;
   --bg-disabled: #d5e0e5;
   --path-disabled: #afbabe;
+  --checked: #eb760f;
+  --unchecked: #afbabe;
+}
+
+[data-theme='dark'] {
+  --text: #b69f9f;
+  --text-input: #d5e0e5;
+  --accent: #7f628d;
+  --companion: #e2afd7;
+  --hover: #6b686a;
+  --decoration: #90696e8a;
+  --bg: #3f3d3d;
+  --bg-disabled: #d5e0e5;
+  --path-disabled: #afbabe;
+  --checked: #e2afd7;
+  --unchecked: #afbabe;
 }
