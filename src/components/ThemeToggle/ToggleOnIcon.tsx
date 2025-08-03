@@ -14,6 +14,7 @@ export const ToggleOnIcon = ({
       height="800px"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
+      data-testid="toggle-on-icon"
     >
       <path
         className={pathClassName}
