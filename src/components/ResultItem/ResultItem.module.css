@@ -33,6 +33,46 @@
   background-color: var(--decoration);
 }
 
+.info {
+  position: relative;
+}
+
+.star {
+  position: absolute;
+  right: 0;
+}
+
+.checkbox {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+
+  width: 2rem;
+  height: 2rem;
+
+  opacity: 0;
+}
+
+.svg {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+
+  width: 2rem;
+  height: 2rem;
+}
+
+.path {
+  fill: var(--unchecked);
+  transition: fill 0.5s ease;
+}
+
+.star.checked {
+  .path {
+    fill: var(--checked);
+  }
+}
+
 .poster {
   width: 100%;
   border-radius: 2rem;
@@ -43,5 +83,9 @@
     cursor: pointer;
     border-color: var(--hover);
     background-color: var(--hover);
+  }
+
+  .checkbox:hover {
+    cursor: pointer;
   }
 }
