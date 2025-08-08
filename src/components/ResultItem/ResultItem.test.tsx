@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { screen } from '@testing-library/react';
 import { ResultItem } from './ResultItem';
 import {
   mockMediaItemWithEnglish,
