@@ -20,34 +20,22 @@ export const useAnimeDetails = (id: number | null): UseAnimeDetailsResult => {
       return;
     }
 
-    let isMounted = true;
-
     setLoading(true);
     fetchAnimeById(id)
       .then((data) => {
-        if (isMounted) {
-          setAnimeData(data);
-          setError('');
-        }
+        setAnimeData(data);
+        setError('');
       })
       .catch((err: unknown) => {
-        if (isMounted) {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError('Unknown error occurred');
-          }
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Unknown error occurred');
         }
       })
       .finally(() => {
-        if (isMounted) {
-          setLoading(false);
-        }
+        setLoading(false);
       });
-
-    return () => {
-      isMounted = false;
-    };
   }, [id]);
 
   return { animeData, loading, error };

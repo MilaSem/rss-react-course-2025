@@ -3,6 +3,7 @@ import type { Mock } from 'vitest';
 
 import { fetchPopularAnime } from './fetchPopularAnime';
 import { mockMediaItems } from '@/test-utils/mockMedia';
+import { DEFAULT_PAGE, DEFAULT_PER_PAGE } from './constants';
 
 import type { ApiResponse } from './fetchAnimeData';
 import type { MediaStatus } from '@/types/anilistTypes';
@@ -14,9 +15,6 @@ vi.mock('./fetchAnimeData', () => {
 });
 
 import { fetchAnimeData } from './fetchAnimeData';
-
-const DEFAULT_PAGE = 1;
-const DEFAULT_PER_PAGE = 5;
 
 const validStatuses: MediaStatus[] = [
   'FINISHED',

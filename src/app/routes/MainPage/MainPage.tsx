@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { Outlet, useSearchParams, Link } from 'react-router';
 import { useQueryParams } from '@/hooks/useQueryParams';
 import { useAnimeData } from '@/hooks/useAnimeData';
@@ -47,12 +47,13 @@ export const MainPage = () => {
 
   const outletRef = useRef<HTMLDivElement>(null);
 
-  useClickOutside(outletRef, () => {
-    if (searchParams.has('details')) {
-      searchParams.delete('details');
-      setSearchParams(searchParams);
-    }
-  });
+  const handleCloseDetails = useCallback(() => {
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.delete('details');
+    setSearchParams(newSearchParams);
+  }, [searchParams, setSearchParams]);
+
+  useClickOutside(outletRef, handleCloseDetails);
 
   return (
     <>
@@ -62,6 +63,7 @@ export const MainPage = () => {
       <h1 className={styles.title}>Anime Catalog</h1>
 
       <SearchPanel onSearch={handleSearch} searchTerm={searchTerm} />
+
       {items && items.length > 0 && (
         <Pagination
           currentPage={currentPage}
@@ -70,6 +72,7 @@ export const MainPage = () => {
           onNextPage={handleNextPage}
         />
       )}
+
       <div className={styles.content}>
         <div className={styles.left}>
           <Results loading={loading} error={error} items={items} />
@@ -79,10 +82,7 @@ export const MainPage = () => {
           <div className={styles.right} ref={outletRef}>
             <button
               className={styles.close}
-              onClick={() => {
-                searchParams.delete('details');
-                setSearchParams(searchParams);
-              }}
+              onClick={handleCloseDetails}
               aria-label="close"
             >
               <CloseIcon className={styles.svg} pathClassName={styles.path} />

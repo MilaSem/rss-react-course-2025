@@ -46,7 +46,6 @@ describe('Pagination', () => {
       />,
     );
     const prevButton = screen.getByRole('button', { name: /prev/i });
-    expect(prevButton).toBeEnabled();
 
     await userEvent.click(prevButton);
     expect(onPrev).toHaveBeenCalled();

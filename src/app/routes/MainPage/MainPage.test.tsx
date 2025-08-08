@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { screen } from '@testing-library/react';
+import { renderWithProviders } from '@/test-utils/renderWithProviders';
 
 import { MainPage } from './MainPage';
 
@@ -29,40 +29,26 @@ vi.mock('@/hooks/useClickOutside', () => ({
 
 describe('MainPage', () => {
   it('should render the title with correct text', () => {
-    render(
-      <MemoryRouter>
-        <MainPage />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<MainPage />);
     expect(screen.getByText('Anime Catalog')).toBeInTheDocument();
   });
 
   it('should render SearchPanel component', () => {
-    render(
-      <MemoryRouter>
-        <MainPage />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<MainPage />);
     expect(screen.getByPlaceholderText(/Search/i)).toBeInTheDocument();
   });
 
   it('should render Pagination when items are present', () => {
-    render(
-      <MemoryRouter>
-        <MainPage />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<MainPage />);
 
     expect(screen.getByRole('button', { name: /prev/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
   });
 
   it('should display details block when "details" param exists', () => {
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <MainPage />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<MainPage />, {
+      routerProps: { initialEntries: ['/?details=1'] },
+    });
     expect(screen.getByRole('button', { name: /close/i })).toBeInTheDocument();
   });
 });

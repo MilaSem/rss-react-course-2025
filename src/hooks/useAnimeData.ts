@@ -8,7 +8,7 @@ interface UseAnimeDataProps {
   page: number;
 }
 
-interface UseAnimeDataReturn {
+interface UseAnimeData {
   items: Media[];
   hasNextPage: boolean;
   loading: boolean;
@@ -18,7 +18,7 @@ interface UseAnimeDataReturn {
 export const useAnimeData = ({
   searchTerm,
   page,
-}: UseAnimeDataProps): UseAnimeDataReturn => {
+}: UseAnimeDataProps): UseAnimeData => {
   const [items, setItems] = useState<Media[]>([]);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,13 +35,10 @@ export const useAnimeData = ({
             ? await fetchAnimeBySearchTerm(searchTerm, page)
             : await fetchPopularAnime(page);
         setItems(response.data.Page.media);
-        setHasNextPage(response.data.Page.pageInfo?.hasNextPage ?? false);
+        setHasNextPage(Boolean(response.data.Page.pageInfo?.hasNextPage));
       } catch (error: unknown) {
-        let message = '';
         if (error instanceof Error) {
-          message = error.message;
-
-          setError(message);
+          setError(error.message);
         }
       } finally {
         setLoading(false);

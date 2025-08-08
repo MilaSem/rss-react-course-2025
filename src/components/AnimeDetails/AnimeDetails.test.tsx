@@ -1,10 +1,9 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
-
+import { screen } from '@testing-library/react';
 import { useAnimeDetails } from '@/hooks/useAnimeDetails';
 import { AnimeDetails } from './AnimeDetails';
 import { mockAnimeFullData } from '@/test-utils/mockMedia';
+import { renderWithProviders } from '@/test-utils/renderWithProviders';
 
 vi.mock('@/hooks/useAnimeDetails');
 
@@ -21,11 +20,9 @@ describe('AnimeDetails', () => {
       loading: true,
       error: '',
     });
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <AnimeDetails />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<AnimeDetails />, {
+      routerProps: { initialEntries: ['/?details=1'] },
+    });
     expect(screen.getByTestId('spinner')).toBeInTheDocument();
   });
 
@@ -35,11 +32,9 @@ describe('AnimeDetails', () => {
       loading: false,
       error: 'Some error',
     });
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <AnimeDetails />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<AnimeDetails />, {
+      routerProps: { initialEntries: ['/?details=1'] },
+    });
     expect(screen.getByText(/Error:/)).toHaveTextContent('Error: Some error');
   });
 
@@ -49,11 +44,9 @@ describe('AnimeDetails', () => {
       loading: false,
       error: '',
     });
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <AnimeDetails />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<AnimeDetails />, {
+      routerProps: { initialEntries: ['/?details=1'] },
+    });
     expect(screen.getByTestId('description')).toHaveTextContent('Sample');
   });
 
@@ -69,11 +62,9 @@ describe('AnimeDetails', () => {
       error: '',
     });
 
-    render(
-      <MemoryRouter initialEntries={['/?details=1']}>
-        <AnimeDetails />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<AnimeDetails />, {
+      routerProps: { initialEntries: ['/?details=1'] },
+    });
 
     expect(screen.getByTestId('description')).toHaveTextContent(
       'No description for this item',
@@ -81,11 +72,9 @@ describe('AnimeDetails', () => {
   });
 
   it('should return null if no "details" param in URL', () => {
-    const { container } = render(
-      <MemoryRouter initialEntries={['/']}>
-        <AnimeDetails />
-      </MemoryRouter>,
-    );
+    const { container } = renderWithProviders(<AnimeDetails />, {
+      routerProps: { initialEntries: [`/`] },
+    });
 
     expect(container).toBeEmptyDOMElement();
   });
