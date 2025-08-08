@@ -3,6 +3,7 @@ import type { Mock } from 'vitest';
 
 import { fetchAnimeBySearchTerm } from './fetchAnimeBySearchTerm';
 import { mockMediaItemsBySearchTerm } from '@/test-utils/mockMedia';
+import { DEFAULT_PAGE, DEFAULT_PER_PAGE } from './constants';
 
 import type { ApiResponse } from './fetchAnimeData';
 
@@ -13,9 +14,6 @@ vi.mock('./fetchAnimeData', () => {
 });
 
 import { fetchAnimeData } from './fetchAnimeData';
-
-const DEFAULT_PAGE = 1;
-const DEFAULT_PER_PAGE = 20;
 
 describe('fetchAnimeBySearchTerm', () => {
   it('should call fetchAnimeData with the correct params', async () => {

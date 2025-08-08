@@ -3,7 +3,6 @@
   justify-content: space-between;
 
   width: 35rem;
-  margin-bottom: 2rem;
   padding: 0.5rem;
   border-radius: 4rem;
 
@@ -49,13 +48,11 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .button {
-    &:hover {
-      cursor: pointer;
-    }
+  .button:hover {
+    cursor: pointer;
+  }
 
-    &:hover .path {
-      fill: var(--hover);
-    }
+  .button:hover .path {
+    fill: var(--hover);
   }
 }

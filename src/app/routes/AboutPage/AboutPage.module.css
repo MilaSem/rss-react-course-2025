@@ -1,0 +1,29 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem auto;
+}
+
+.title {
+  margin-bottom: 2rem;
+  font-family: Coiny, system-ui;
+}
+
+.link {
+  padding: 1rem;
+
+  font-family: Coiny, system-ui;
+  font-weight: 800;
+  color: var(--accent);
+  text-decoration: none;
+
+  transition: color 0.5s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    cursor: pointer;
+    color: var(--companion);
+  }
+}

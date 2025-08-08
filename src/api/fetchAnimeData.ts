@@ -2,12 +2,6 @@ import type { Media, PageInfo } from '@/types/anilistTypes';
 
 const API_URL = 'https://graphql.anilist.co';
 
-interface Variables {
-  search?: string;
-  page: number;
-  perPage: number;
-}
-
 export interface ApiResponse {
   data: {
     Page: {
@@ -16,11 +10,10 @@ export interface ApiResponse {
     };
   };
 }
-
-export const fetchAnimeData = async (
+export const fetchAnimeData = async <T>(
   query: string,
-  variables: Variables,
-): Promise<ApiResponse> => {
+  variables: Record<string, unknown>,
+): Promise<{ data: T }> => {
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -33,7 +26,7 @@ export const fetchAnimeData = async (
     throw new Error(`Network error ${response.status}`);
   }
 
-  const data = (await response.json()) as ApiResponse;
+  const data = (await response.json()) as { data: T };
 
   return data;
 };

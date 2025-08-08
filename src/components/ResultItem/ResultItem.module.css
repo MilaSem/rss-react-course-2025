@@ -1,13 +1,16 @@
 .item {
+  all: unset;
+
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   gap: 1rem;
   align-items: center;
 
-  margin-top: 2rem;
   padding: 2rem;
   border: 1px var(--accent) solid;
   border-radius: 3rem;
+
+  transition: all 0.5s ease;
 }
 
 .title {
@@ -33,4 +36,12 @@
 .poster {
   width: 100%;
   border-radius: 2rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .item:hover {
+    cursor: pointer;
+    border-color: var(--hover);
+    background-color: var(--hover);
+  }
 }
