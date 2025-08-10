@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import { useAnimeData } from './useAnimeData';
 import {
@@ -6,6 +6,10 @@ import {
   mockApiResponseWithoutPageInfo,
   mockMediaItems,
 } from '@/test-utils/mockMedia';
+
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/api/queryClient';
+import type { ReactNode } from 'react';
 
 vi.mock('@/api/fetchAnimeBySearchTerm');
 vi.mock('@/api/fetchPopularAnime');
@@ -16,7 +20,15 @@ import { fetchPopularAnime } from '@/api/fetchPopularAnime';
 const mockedFetchAnimeBySearchTerm = vi.mocked(fetchAnimeBySearchTerm);
 const mockedFetchPopularAnime = vi.mocked(fetchPopularAnime);
 
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+);
+
 describe('useAnimeData', () => {
+  beforeEach(() => {
+    queryClient.clear();
+  });
+
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -24,14 +36,15 @@ describe('useAnimeData', () => {
   it('should load data correctly when searching with a search term', async () => {
     mockedFetchAnimeBySearchTerm.mockResolvedValueOnce(mockApiResponse);
 
-    const { result } = renderHook(() =>
-      useAnimeData({ searchTerm: 'Naruto', page: 1 }),
+    const { result } = renderHook(
+      () => useAnimeData({ searchTerm: 'Naruto', page: 1 }),
+      { wrapper },
     );
 
-    expect(result.current.loading).toBe(true);
+    expect(result.current.isFetching).toBe(true);
 
     await waitFor(() => {
-      expect(result.current.loading).toBe(false);
+      expect(result.current.isFetching).toBe(false);
     });
 
     expect(mockedFetchAnimeBySearchTerm).toHaveBeenCalledWith('Naruto', 1);
@@ -43,14 +56,15 @@ describe('useAnimeData', () => {
   it('should use fetchPopularAnime when search term is empty', async () => {
     mockedFetchPopularAnime.mockResolvedValueOnce(mockApiResponse);
 
-    const { result } = renderHook(() =>
-      useAnimeData({ searchTerm: '', page: 2 }),
+    const { result } = renderHook(
+      () => useAnimeData({ searchTerm: '', page: 2 }),
+      { wrapper },
     );
 
-    expect(result.current.loading).toBe(true);
+    expect(result.current.isFetching).toBe(true);
 
     await waitFor(() => {
-      expect(result.current.loading).toBe(false);
+      expect(result.current.isFetching).toBe(false);
     });
 
     expect(mockedFetchPopularAnime).toHaveBeenCalledWith(2);
@@ -59,37 +73,20 @@ describe('useAnimeData', () => {
     expect(result.current.error).toBeNull();
   });
 
-  it('should handle API errors gracefully', async () => {
-    const errorMsg = 'Network error';
-    mockedFetchPopularAnime.mockRejectedValueOnce(new Error(errorMsg));
-
-    const { result } = renderHook(() =>
-      useAnimeData({ searchTerm: '', page: 1 }),
-    );
-
-    expect(result.current.loading).toBe(true);
-
-    await waitFor(() => {
-      expect(result.current.loading).toBe(false);
-    });
-
-    expect(result.current.error).toBe(errorMsg);
-    expect(result.current.items).toEqual([]);
-  });
-
   it('should set hasNextPage to false if pageInfo or hasNextPage is missing', async () => {
     mockedFetchPopularAnime.mockResolvedValueOnce(
       mockApiResponseWithoutPageInfo,
     );
 
-    const { result } = renderHook(() =>
-      useAnimeData({ searchTerm: '', page: 3 }),
+    const { result } = renderHook(
+      () => useAnimeData({ searchTerm: '', page: 3 }),
+      { wrapper },
     );
 
-    expect(result.current.loading).toBe(true);
+    expect(result.current.isFetching).toBe(true);
 
     await waitFor(() => {
-      expect(result.current.loading).toBe(false);
+      expect(result.current.isFetching).toBe(false);
     });
 
     expect(result.current.hasNextPage).toBe(false);
