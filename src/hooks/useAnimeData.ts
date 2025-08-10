@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
 import { fetchAnimeBySearchTerm } from '@/api/fetchAnimeBySearchTerm';
 import { fetchPopularAnime } from '@/api/fetchPopularAnime';
 import { useAnimeCache } from '@/store/useAnimeCache';
 import type { Media } from '@/types/anilistTypes';
+
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 interface UseAnimeDataProps {
   searchTerm: string;
@@ -12,45 +14,54 @@ interface UseAnimeDataProps {
 interface UseAnimeData {
   items: Media[];
   hasNextPage: boolean;
-  loading: boolean;
+  isFetching: boolean;
   error: string | null;
 }
+
 export const useAnimeData = ({
   searchTerm,
   page,
-}: UseAnimeDataProps): UseAnimeData => {
-  const [items, setItems] = useState<Media[]>([]);
-  const [hasNextPage, setHasNextPage] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
+}: UseAnimeDataProps): UseAnimeData & { refetch: () => void } => {
   const addItemsToCache = useAnimeCache((state) => state.addItems);
 
+  const queryKey = ['anime', searchTerm, page];
+
+  const { data, error, isFetching, isError, refetch } = useQuery({
+    queryKey,
+    queryFn: async () => {
+      console.log(
+        `Request to server for: searchTerm=${searchTerm}, page=${page}`,
+      );
+      const response =
+        searchTerm.trim() !== ''
+          ? await fetchAnimeBySearchTerm(searchTerm, page)
+          : await fetchPopularAnime(page);
+
+      const fetchedItems = response.data.Page.media;
+
+      addItemsToCache(fetchedItems);
+
+      return {
+        items: fetchedItems,
+        hasNextPage: Boolean(response.data.Page.pageInfo?.hasNextPage),
+      };
+    },
+    staleTime: Infinity,
+  });
+
   useEffect(() => {
-    const fetchItems = async () => {
-      setLoading(true);
-      setError(null);
+    if (data !== undefined && !isFetching) {
+      console.log('Results data taken from cache');
+    }
+  }, [data, isFetching]);
 
-      try {
-        const response =
-          searchTerm.trim() !== ''
-            ? await fetchAnimeBySearchTerm(searchTerm, page)
-            : await fetchPopularAnime(page);
-        const fetchedItems = response.data.Page.media;
-        setItems(fetchedItems);
-        addItemsToCache(fetchedItems);
-        setHasNextPage(Boolean(response.data.Page.pageInfo?.hasNextPage));
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(error.message);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    void fetchItems();
-  }, [searchTerm, page]);
-
-  return { items, hasNextPage, loading, error };
+  return {
+    items: data?.items || [],
+    hasNextPage: data?.hasNextPage ?? false,
+    isFetching,
+    error: isError ? (error?.message ?? null) : null,
+    refetch: () => {
+      return void refetch();
+    },
+  };
 };
