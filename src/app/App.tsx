@@ -5,6 +5,9 @@ import { useTheme } from '@/hooks/useTheme';
 import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle';
 import { ThemeProvider } from '@/context/ThemeProvider';
 
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/api/queryClient';
+
 const InnerApp = () => {
   const { theme } = useTheme();
 
@@ -22,8 +25,10 @@ const InnerApp = () => {
 
 export const App = () => {
   return (
-    <ThemeProvider>
-      <InnerApp />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <InnerApp />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };

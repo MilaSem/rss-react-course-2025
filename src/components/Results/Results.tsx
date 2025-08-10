@@ -2,17 +2,24 @@ import type { Media } from '@/types/anilistTypes';
 import { Spinner } from '../Spinner/Spinner';
 import { ResultItem } from '../ResultItem/ResultItem';
 import { Flyout } from '../Flyout/Flyout';
+import { RefreshButton } from '../RefreshButton/RefreshButton';
 import { useSelectedItems } from '@/store/useSelectedItems';
 
 import styles from './Results.module.css';
 
 interface ResultsProps {
-  loading: boolean;
   error: string | null;
   items: Media[];
+  onRefresh?: () => void;
+  isFetching: boolean;
 }
 
-export const Results = ({ loading, error, items }: ResultsProps) => {
+export const Results = ({
+  error,
+  items,
+  onRefresh,
+  isFetching,
+}: ResultsProps) => {
   const { selectedIds, addItem, removeItem } = useSelectedItems();
 
   const handleSelectedChange = (id: number, selected: boolean) => {
@@ -24,7 +31,7 @@ export const Results = ({ loading, error, items }: ResultsProps) => {
     }
   };
 
-  if (loading) {
+  if (isFetching) {
     return <Spinner />;
   }
 
@@ -38,6 +45,8 @@ export const Results = ({ loading, error, items }: ResultsProps) => {
 
   return (
     <div className={styles.container}>
+      {onRefresh && <RefreshButton onClick={onRefresh} />}
+
       {items.map((item) => (
         <ResultItem
           key={item.id}

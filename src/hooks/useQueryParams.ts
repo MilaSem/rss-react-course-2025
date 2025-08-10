@@ -17,9 +17,7 @@ export const useQueryParams = () => {
     }
     newParams.set('page', newPage.toString());
 
-    void navigate(`${location.pathname}?${newParams.toString()}`, {
-      replace: true,
-    });
+    void navigate(`${location.pathname}?${newParams.toString()}`);
   };
 
   return { searchTerm, currentPage, updateUrl };

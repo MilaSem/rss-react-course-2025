@@ -3,6 +3,9 @@ import { render } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import type { MemoryRouterProps } from 'react-router';
 import type { RenderOptions } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 interface AllProvidersProps {
   children: ReactNode;
@@ -10,7 +13,9 @@ interface AllProvidersProps {
 }
 
 const AllProviders = ({ children, routerProps }: AllProvidersProps) => (
-  <MemoryRouter {...routerProps}>{children}</MemoryRouter>
+  <MemoryRouter {...routerProps}>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  </MemoryRouter>
 );
 
 export const renderWithProviders = (
