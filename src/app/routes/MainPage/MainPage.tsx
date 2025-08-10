@@ -17,7 +17,7 @@ export const MainPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedId = searchParams.get('details');
 
-  const { items, hasNextPage, loading, error } = useAnimeData({
+  const { items, hasNextPage, error, refetch, isFetching } = useAnimeData({
     searchTerm: searchTerm,
     page: currentPage,
   });
@@ -75,7 +75,12 @@ export const MainPage = () => {
 
       <div className={styles.content}>
         <div className={styles.left}>
-          <Results loading={loading} error={error} items={items} />
+          <Results
+            error={error}
+            items={items}
+            onRefresh={refetch}
+            isFetching={isFetching}
+          />
         </div>
 
         {selectedId && (
