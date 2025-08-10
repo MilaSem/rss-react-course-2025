@@ -4,16 +4,21 @@ import { useAnimeDetails } from '@/hooks/useAnimeDetails';
 import { Spinner } from '../Spinner/Spinner';
 
 import styles from './AnimeDetails.module.css';
+import { RefreshButton } from '../RefreshButton/RefreshButton';
 
 export const AnimeDetails = () => {
   const [searchParams] = useSearchParams();
   const idParam = searchParams.get('details');
   const id = idParam ? parseInt(idParam, 10) : null;
 
-  const { animeData, loading, error } = useAnimeDetails(id);
+  const { animeData, error, refetch, isFetching } = useAnimeDetails(id);
+  const handleRefresh = () => {
+    refetch();
+  };
+
   if (!id) return null;
 
-  if (loading) return <Spinner />;
+  if (isFetching) return <Spinner />;
   if (error) return <div>Error: {error}</div>;
 
   const MAX_LENGTH = 1000;
@@ -22,9 +27,14 @@ export const AnimeDetails = () => {
     <div>
       {animeData && (
         <div className={styles.details}>
-          <p className={styles.title}>
-            {animeData.title?.english || animeData.title?.romaji || 'No title'}
-          </p>
+          <div className={styles.header}>
+            <p className={styles.title}>
+              {animeData.title?.english ||
+                animeData.title?.romaji ||
+                'No title'}
+            </p>
+            <RefreshButton onClick={handleRefresh} />
+          </div>
 
           <p data-testid="description">
             {cleanAndTrimText(MAX_LENGTH, animeData.description) ||

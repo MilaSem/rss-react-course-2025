@@ -17,8 +17,9 @@ describe('AnimeDetails', () => {
   it('should render Spinner when loading', () => {
     mockedUseAnimeDetails.mockReturnValue({
       animeData: null,
-      loading: true,
       error: '',
+      isFetching: true,
+      refetch: vi.fn(),
     });
     renderWithProviders(<AnimeDetails />, {
       routerProps: { initialEntries: ['/?details=1'] },
@@ -29,8 +30,9 @@ describe('AnimeDetails', () => {
   it('should render error message when error occurs', () => {
     mockedUseAnimeDetails.mockReturnValue({
       animeData: null,
-      loading: false,
       error: 'Some error',
+      isFetching: false,
+      refetch: vi.fn(),
     });
     renderWithProviders(<AnimeDetails />, {
       routerProps: { initialEntries: ['/?details=1'] },
@@ -41,8 +43,9 @@ describe('AnimeDetails', () => {
   it('should render anime data when loaded', () => {
     mockedUseAnimeDetails.mockReturnValue({
       animeData: mockAnimeFullData,
-      loading: false,
       error: '',
+      isFetching: false,
+      refetch: vi.fn(),
     });
     renderWithProviders(<AnimeDetails />, {
       routerProps: { initialEntries: ['/?details=1'] },
@@ -58,8 +61,9 @@ describe('AnimeDetails', () => {
 
     mockedUseAnimeDetails.mockReturnValue({
       animeData: mockDataWithNoDescription,
-      loading: false,
       error: '',
+      isFetching: false,
+      refetch: vi.fn(),
     });
 
     renderWithProviders(<AnimeDetails />, {
