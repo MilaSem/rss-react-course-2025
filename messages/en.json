@@ -1,0 +1,22 @@
+{
+  "MainPage": {
+    "about": "about app"
+  },
+  "AboutPage": {
+    "title": "About App",
+    "author": "Author:",
+    "authorName": "Mila Sem",
+    "appDescription": "The Anime Catalog App was created as part of the",
+    "courseLink": "RS School",
+    "courseDescription": "The course is designed for students who have passed Stage #2 and newcomers with experience in JavaScript, TypeScript, Git, NPM, CSS, HTML, and API interaction."
+  },
+  "NotFoundPage": {
+    "title": "Oops... Something went wrong!",
+    "description": "Sorry, the page you requested was not found"
+  },
+  "Results": {
+    "message": "No results available.",
+    "subtitle": "Title",
+    "description": "Description"
+  }
+}

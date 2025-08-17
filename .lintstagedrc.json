@@ -1,4 +1,0 @@
-{
-  "*": ["eslint", "prettier --check --ignore-unknown ."],
-  "**/*.css": ["stylelint"]
-}

@@ -1,0 +1,22 @@
+{
+  "MainPage": {
+    "about": "О приложении"
+  },
+  "AboutPage": {
+    "title": "О приложении",
+    "author": "Автор:",
+    "authorName": "Mila Sem",
+    "appDescription": "Приложение Anime Catalog было создано в рамках курса",
+    "courseLink": "RS School",
+    "courseDescription": "Курс предназначен для студентов, прошедших Этап #2 и новичков с опытом в JavaScript, TypeScript, Git, NPM, CSS, HTML и взаимодействия с API."
+  },
+  "NotFoundPage": {
+    "title": "Упс... Что-то произошло!",
+    "description": "Приносим извинения, запрошенная страница не найдена"
+  },
+  "Results": {
+    "message": "Нет доступных результатов.",
+    "subtitle": "Название",
+    "description": "Описание"
+  }
+}
