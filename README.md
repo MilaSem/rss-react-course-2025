@@ -1,6 +1,6 @@
 # Brief Description of the App's Performance
 
-## Before Optimization
+## After Optimization
 
 1. Searching for a country
    ![Searching for a country](src/assets/searching.png)
