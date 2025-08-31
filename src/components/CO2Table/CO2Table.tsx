@@ -1,34 +1,11 @@
-import { useState, useEffect } from 'react';
 import type { GlobalCO2Data } from '@/types/CO2Data';
-import { fetchCO2Data } from '@/api/fetchCO2Data';
+import { co2DataResource } from '@/resources';
 import { prepareCountryRow } from '@/utils/prepareCountryRow';
 
 import styles from './CO2Table.module.css';
 
 export const CO2Table = () => {
-  const [data, setData] = useState<GlobalCO2Data | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchCO2Data()
-      .then((json) => {
-        setData(json);
-        setLoading(false);
-      })
-      .catch((err) => {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError('Unknown error');
-        }
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!data) return <div>No data available</div>;
+  const data: GlobalCO2Data = co2DataResource.read();
 
   const tableRows = Object.entries(data).map(([country, countryData]) => {
     const row = prepareCountryRow(country, countryData);
