@@ -1,0 +1,25 @@
+.table {
+  border-collapse: collapse;
+  padding: 0.5rem;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem;
+  border: 1px solid var(--accent);
+}
+
+.highlight {
+  background-color: var(--hover);
+  animation: highlighter 1.5s ease-in;
+}
+
+@keyframes highlighter {
+  from {
+    background-color: var(--hover);
+  }
+
+  to {
+    background-color: transparent;
+  }
+}

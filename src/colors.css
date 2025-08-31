@@ -1,0 +1,13 @@
+:root {
+  --text: #292929;
+  --text-input: #fff;
+  --accent: #087ea4;
+  --companion: #88c9e7;
+  --hover: #cfe8f3;
+  --decoration: #087ea48a;
+  --bg: #fff;
+  --bg-disabled: #d5e0e5;
+  --path-disabled: #afbabe;
+  --checked: #eb760f;
+  --unchecked: #afbabe;
+}
