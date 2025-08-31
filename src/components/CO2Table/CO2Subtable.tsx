@@ -4,11 +4,13 @@ import styles from './CO2Subtable.module.css';
 interface CO2SubtableProps {
   tableRows: CountryRow[];
   selectedColumns: string[];
+  isHighlightRows: boolean;
 }
 
 export const CO2Subtable = ({
   tableRows,
   selectedColumns,
+  isHighlightRows: isHighlightRows,
 }: CO2SubtableProps) => {
   return (
     <table className={styles.table}>
@@ -29,7 +31,7 @@ export const CO2Subtable = ({
       </thead>
       <tbody>
         {tableRows.map((row, index) => (
-          <tr key={index}>
+          <tr key={index} className={isHighlightRows ? styles.highlight : ''}>
             <td>{row.country}</td>
             <td>{row.iso_code}</td>
             <td>{row.year}</td>

@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useEffect, useState, type ChangeEvent } from 'react';
 import type { GlobalCO2Data } from '@/types/CO2Data';
 import { co2DataResource } from '@/resources';
 import { prepareCountryRow } from '@/utils/prepareCountryRow';
@@ -14,6 +14,7 @@ export const CO2Table = () => {
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [isHighlightRows, setIsHighlightRows] = useState(false);
 
   const data: GlobalCO2Data = co2DataResource.read();
 
@@ -34,7 +35,15 @@ export const CO2Table = () => {
   const handleYearChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const year = parseInt(e.target.value, 10);
     setSelectedYear(year);
+    setIsHighlightRows(true);
   };
+
+  useEffect(() => {
+    if (isHighlightRows) {
+      const timer = setTimeout(() => setIsHighlightRows(false), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [isHighlightRows]);
 
   const handleColumnChange = (column: string, checked: boolean) => {
     setSelectedColumns((prev) =>
@@ -75,7 +84,11 @@ export const CO2Table = () => {
         handleSortButtonClick={handleSortButtonClick}
       />
 
-      <CO2Subtable tableRows={sortedRows} selectedColumns={selectedColumns} />
+      <CO2Subtable
+        tableRows={sortedRows}
+        selectedColumns={selectedColumns}
+        isHighlightRows={isHighlightRows}
+      />
     </>
   );
 };
