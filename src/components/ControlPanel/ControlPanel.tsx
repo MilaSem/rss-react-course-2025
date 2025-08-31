@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react';
 import type { ChangeEvent } from 'react';
 import { CO2TableSettings } from '../CO2TableSettings/CO2TableSettings';
 
@@ -20,7 +21,7 @@ interface ControlPanelProps {
   handleSortButtonClick: () => void;
 }
 
-export const ControlPanel = ({
+const ControlPanelComponent = ({
   searchTerm,
   onSearchChange,
   allYears,
@@ -36,6 +37,14 @@ export const ControlPanel = ({
   handleSortFieldSelect,
   handleSortButtonClick,
 }: ControlPanelProps) => {
+  const yearOptions = useMemo(() => {
+    return allYears.map((year) => (
+      <option key={year} value={year}>
+        {year}
+      </option>
+    ));
+  }, [allYears]);
+
   return (
     <div className={styles.control}>
       <input
@@ -56,11 +65,7 @@ export const ControlPanel = ({
               value={selectedYear ?? ''}
               onChange={onYearChange}
             >
-              {allYears.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
+              {yearOptions}
             </select>
           </label>
         </div>
@@ -96,3 +101,5 @@ export const ControlPanel = ({
     </div>
   );
 };
+
+export const ControlPanel = React.memo(ControlPanelComponent);

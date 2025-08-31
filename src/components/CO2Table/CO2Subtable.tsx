@@ -1,3 +1,4 @@
+import React from 'react';
 import type { CountryRow } from '@/utils/prepareCountryRow';
 import styles from './CO2Subtable.module.css';
 
@@ -7,7 +8,7 @@ interface CO2SubtableProps {
   isHighlightRows: boolean;
 }
 
-export const CO2Subtable = ({
+const CO2SubtableComponent = ({
   tableRows,
   selectedColumns,
   isHighlightRows: isHighlightRows,
@@ -49,3 +50,5 @@ export const CO2Subtable = ({
     </table>
   );
 };
+
+export const CO2Subtable = React.memo(CO2SubtableComponent);

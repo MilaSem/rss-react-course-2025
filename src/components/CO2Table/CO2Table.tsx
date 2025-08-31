@@ -1,4 +1,10 @@
-import { useEffect, useState, type ChangeEvent } from 'react';
+import {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  type ChangeEvent,
+} from 'react';
 import type { GlobalCO2Data } from '@/types/CO2Data';
 import { co2DataResource } from '@/resources';
 import { prepareCountryRow } from '@/utils/prepareCountryRow';
@@ -18,25 +24,60 @@ export const CO2Table = () => {
 
   const data: GlobalCO2Data = co2DataResource.read();
 
-  const filteredCountriesByName = filterCountriesByName(data, searchTerm);
+  const filteredCountriesByName = useMemo(
+    () => filterCountriesByName(data, searchTerm),
+    [data, searchTerm],
+  );
 
-  const allYears = getAllYears(data);
+  const allYears = useMemo(() => getAllYears(data), [data]);
 
   if (selectedYear === null && allYears.length > 0) {
     setSelectedYear(allYears[0]);
   }
 
-  const tableRows = filteredCountriesByName.map((country) => {
-    const countryData = data[country];
-    const row = prepareCountryRow(country, countryData, selectedYear);
-    return row;
-  });
+  const tableRows = useMemo(
+    () =>
+      filteredCountriesByName.map((country) => {
+        const countryData = data[country];
+        return prepareCountryRow(country, countryData, selectedYear);
+      }),
+    [filteredCountriesByName, selectedYear, data],
+  );
 
-  const handleYearChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleYearChange = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     const year = parseInt(e.target.value, 10);
     setSelectedYear(year);
     setIsHighlightRows(true);
-  };
+  }, []);
+
+  const handleColumnChange = useCallback((column: string, checked: boolean) => {
+    setSelectedColumns((prev) =>
+      checked ? [...prev, column] : prev.filter((c) => c !== column),
+    );
+  }, []);
+
+  const onOpenModal = useCallback(() => setModalOpen(true), []);
+  const onCloseModal = useCallback(() => setModalOpen(false), []);
+
+  const { sortField, sortDirection, changeSortField, getSortButtonLabel } =
+    useSorting();
+
+  const handleSortFieldSelect = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      const value = e.target.value as 'name' | 'population';
+      changeSortField(value);
+    },
+    [changeSortField],
+  );
+
+  const handleSortButtonClick = useCallback(() => {
+    changeSortField(sortField);
+  }, [changeSortField, sortField]);
+
+  const sortedRows = useMemo(
+    () => sortRows(tableRows, sortField, sortDirection),
+    [tableRows, sortField, sortDirection],
+  );
 
   useEffect(() => {
     if (isHighlightRows) {
@@ -44,26 +85,6 @@ export const CO2Table = () => {
       return () => clearTimeout(timer);
     }
   }, [isHighlightRows]);
-
-  const handleColumnChange = (column: string, checked: boolean) => {
-    setSelectedColumns((prev) =>
-      checked ? [...prev, column] : prev.filter((c) => c !== column),
-    );
-  };
-
-  const { sortField, sortDirection, changeSortField, getSortButtonLabel } =
-    useSorting();
-
-  const sortedRows = sortRows(tableRows, sortField, sortDirection);
-
-  const handleSortFieldSelect = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as 'name' | 'population';
-    changeSortField(value);
-  };
-
-  const handleSortButtonClick = () => {
-    changeSortField(sortField);
-  };
 
   return (
     <>
@@ -74,8 +95,8 @@ export const CO2Table = () => {
         selectedYear={selectedYear}
         onYearChange={handleYearChange}
         isModalOpen={isModalOpen}
-        onOpenModal={() => setModalOpen(true)}
-        onCloseModal={() => setModalOpen(false)}
+        onOpenModal={onOpenModal}
+        onCloseModal={onCloseModal}
         selectedColumns={selectedColumns}
         onColumnChange={handleColumnChange}
         sortField={sortField}

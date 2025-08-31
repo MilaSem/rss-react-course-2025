@@ -1,4 +1,6 @@
+import React, { useCallback } from 'react';
 import { useRef, useEffect } from 'react';
+
 import styles from './CO2TableSettings.module.css';
 
 interface CO2TableSettingsProps {
@@ -14,7 +16,7 @@ const availableFields = [
   { key: 'temperature_change_from_co2', label: 'Temp Change from CO2' },
 ];
 
-export const CO2TableSettings = ({
+const CO2TableSettingsComponent = ({
   isOpen,
   onClose,
   selectedFields,
@@ -22,8 +24,8 @@ export const CO2TableSettings = ({
 }: CO2TableSettingsProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+  const handleClickOutside = useCallback(
+    (event: MouseEvent) => {
       if (
         isOpen &&
         modalRef.current &&
@@ -31,13 +33,16 @@ export const CO2TableSettings = ({
       ) {
         onClose();
       }
-    };
+    },
+    [isOpen, onClose],
+  );
 
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen, onClose]);
+  }, [handleClickOutside]);
 
   if (!isOpen) return null;
 
@@ -65,3 +70,5 @@ export const CO2TableSettings = ({
     </div>
   );
 };
+
+export const CO2TableSettings = React.memo(CO2TableSettingsComponent);
