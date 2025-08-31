@@ -1,4 +1,4 @@
-import { getLatestRecords } from './getLatestRecord';
+import { getRecordByYear } from './getRecordByYear';
 import type { CountryData } from '@/types/CO2Data';
 
 export interface CountryRow {
@@ -16,9 +16,10 @@ export interface CountryRow {
 export const prepareCountryRow = (
   countryName: string,
   countryData: CountryData,
+  year?: number | null,
 ): CountryRow => {
   const { iso_code, data } = countryData;
-  const record = getLatestRecords(data);
+  const record = getRecordByYear(data, year);
 
   return {
     country: countryName,

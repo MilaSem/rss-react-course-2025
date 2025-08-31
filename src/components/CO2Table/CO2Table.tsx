@@ -7,21 +7,34 @@ import { filterCountriesByName } from '@/utils/filterCountiesByName';
 import { CO2Subtable } from './CO2Subtable';
 import { sortRows } from '@/utils/sortRows';
 import { useSorting } from '@/hooks/useSorting';
+import { getAllYears } from '@/utils/getAllYears';
 
 export const CO2Table = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
   const data: GlobalCO2Data = co2DataResource.read();
 
   const filteredCountriesByName = filterCountriesByName(data, searchTerm);
 
+  const allYears = getAllYears(data);
+
+  if (selectedYear === null && allYears.length > 0) {
+    setSelectedYear(allYears[0]);
+  }
+
   const tableRows = filteredCountriesByName.map((country) => {
     const countryData = data[country];
-    const row = prepareCountryRow(country, countryData);
+    const row = prepareCountryRow(country, countryData, selectedYear);
     return row;
   });
+
+  const handleYearChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const year = parseInt(e.target.value, 10);
+    setSelectedYear(year);
+  };
 
   const handleColumnChange = (column: string, checked: boolean) => {
     setSelectedColumns((prev) =>
@@ -48,6 +61,9 @@ export const CO2Table = () => {
       <ControlPanel
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
+        allYears={allYears}
+        selectedYear={selectedYear}
+        onYearChange={handleYearChange}
         isModalOpen={isModalOpen}
         onOpenModal={() => setModalOpen(true)}
         onCloseModal={() => setModalOpen(false)}

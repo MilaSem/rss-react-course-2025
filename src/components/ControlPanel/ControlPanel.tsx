@@ -1,10 +1,14 @@
 import type { ChangeEvent } from 'react';
 import { CO2TableSettings } from '../CO2TableSettings/CO2TableSettings';
+
 import styles from './ControlPanel.module.css';
 
 interface ControlPanelProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
+  allYears: number[];
+  selectedYear: number | null;
+  onYearChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   isModalOpen: boolean;
   onOpenModal: () => void;
   onCloseModal: () => void;
@@ -19,6 +23,9 @@ interface ControlPanelProps {
 export const ControlPanel = ({
   searchTerm,
   onSearchChange,
+  allYears,
+  selectedYear,
+  onYearChange,
   isModalOpen,
   onOpenModal,
   onCloseModal,
@@ -40,17 +47,40 @@ export const ControlPanel = ({
         onChange={(e) => onSearchChange(e.target.value)}
       />
 
-      <div className={styles.sorter}>
-        <label>
-          Sort by:
-          <select value={sortField} onChange={handleSortFieldSelect}>
-            <option value="name">Country Name</option>
-            <option value="population">Population</option>
-          </select>
-        </label>
-        <button className={styles.direction} onClick={handleSortButtonClick}>
-          {getSortButtonLabel()}
-        </button>
+      <div className={styles.selectors}>
+        <div className={styles.year}>
+          <label>
+            Select year:
+            <select
+              id="year-select"
+              value={selectedYear ?? ''}
+              onChange={onYearChange}
+            >
+              {allYears.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        <div className={styles.sorter}>
+          <label>
+            Sort by:
+            <select
+              id="sort-field-select"
+              value={sortField}
+              onChange={handleSortFieldSelect}
+            >
+              <option value="name">Country Name</option>
+              <option value="population">Population</option>
+            </select>
+          </label>
+          <button className={styles.direction} onClick={handleSortButtonClick}>
+            {getSortButtonLabel()}
+          </button>
+        </div>
       </div>
 
       <button className={styles.settings} onClick={onOpenModal}>
